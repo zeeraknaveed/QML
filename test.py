@@ -65,8 +65,7 @@ image_datasets = {
 dataset_sizes = {x: len(image_datasets[x]) for x in ["train", "validation"]}
 class_names = image_datasets["train"].classes
 
-train_set = torch.utils.data.Subset(image_datasets['train'], range(48, 244))  # take the rest   
-val_set = torch.utils.data.Subset(image_datasets['train'], range(48)) 
+train_set, val_set = torch.utils.data.random_split(image_datasets['train'], [204, 40])
 test_set = image_datasets['validation']
 
 dataloaders = {
