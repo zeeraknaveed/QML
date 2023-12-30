@@ -79,4 +79,19 @@ inputs, classes = next(iter(dataloaders["validation"]))
 model = torch.load('hybrid_qnn_model.pt')
 model.eval()
 
-# loss, acc = model.evaluate(test_images, test_labels)
+total_loss = []
+total_acc = []
+
+for images,labels in dataloaders['test']:
+    loss, acc = model.evaluate(images, labels)
+    total_loss.append(loss)
+    total_acc.append(acc)
+
+
+accuracy = np.array(total_acc).mean()
+loss = np.array(total_loss).mean()
+
+print('Test Accuracy', accuracy)
+print('Test Loss', loss)
+
+
