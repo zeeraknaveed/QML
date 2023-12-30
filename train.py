@@ -75,16 +75,6 @@ dataloaders = {
 # Get a batch of training data
 inputs, classes = next(iter(dataloaders["validation"]))
 
-# Make a grid from batch
-# out = torchvision.utils.make_grid(inputs)
-
-# imshow(out, title=[class_names[x] for x in classes])
-
-# dataloaders = {
-#     x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True)
-#     for x in ["train", "validation"]
-# }
-
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs):
     since = time.time()
