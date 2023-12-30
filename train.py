@@ -64,11 +64,14 @@ image_datasets = {
 dataset_sizes = {x: len(image_datasets[x]) for x in ["train", "validation"]}
 class_names = image_datasets["train"].classes
 
-# Initialize dataloader
+train_set = torch.utils.data.Subset(image_datasets['train'], range(48, 244))  # take the rest   
+val_set = torch.utils.data.Subset(image_datasets['train'], range(48)) 
+test_set = image_datasets['validation']
+
 dataloaders = {
-    x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True)
-    for x in ["train", "validation"]
-}
+    'train': torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True),
+     'validation':torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=True),
+     'test':torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True) }
 
 # Get a batch of training data
 inputs, classes = next(iter(dataloaders["validation"]))
