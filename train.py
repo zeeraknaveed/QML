@@ -30,7 +30,7 @@ q_depth = 6                 # Depth of the quantum circuit (number of variationa
 gamma_lr_scheduler = 0.1    # Learning rate reduction applied every 10 epochs.
 q_delta = 0.01              # Initial spread of random quantum weights
 start_time = time.time()    # Start of the computation timer
-data_dir = "/content/drive/MyDrive/Colab Notebooks/QML/data/hymenoptera_data"
+data_dir = "../data/hymenoptera_data"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 data_transforms = {
