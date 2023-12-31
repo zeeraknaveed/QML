@@ -10,7 +10,7 @@ from torch.optim import lr_scheduler
 import torchvision
 from torchvision import datasets, transforms
 from aider import *
-
+from torch.utils.data import DataLoader
 # Pennylane
 from pennylane import numpy as np
 
@@ -34,43 +34,32 @@ start_time = time.time()    # Start of the computation timer
 data_dir = "../data/hymenoptera_data"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-data_transforms = {
-    "train": transforms.Compose(
-        [
-            # transforms.RandomResizedCrop(224),     # uncomment for data augmentation
-            # transforms.RandomHorizontalFlip(),     # uncomment for data augmentation
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            # Normalize input channels using mean values and standard deviations of ImageNet.
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-        ]
-    ),
-    "val": transforms.Compose(
-        [
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-        ]
-    ),
-}
 
-image_datasets = {
-    x if x == "train" else "validation": datasets.ImageFolder(
-        os.path.join(data_dir, x), data_transforms[x]
-    )
-    for x in ["train", "val"]
-}
-dataset_sizes = {x: len(image_datasets[x]) for x in ["train", "validation"]}
-class_names = image_datasets["train"].classes
+transformed_dataset = AIDER("aider_labels.csv", 'AIDER/', transform=aider_transforms)
 
-# train_set, val_set = torch.utils.data.random_split(image_datasets['train'], [204, 40])
-# test_set = image_datasets['validation']
+total_count = 6432
+train_count = int(0.5 * total_count)
+valid_count = int(0.2 * total_count)
+test_count = total_count - train_count - valid_count
+train_set, valid_set, test_set = torch.utils.data.random_split(transformed_dataset,
+                                                                (train_count, valid_count, test_count))
+
+train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
+                            drop_last=True)
+valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
+                            drop_last=True)
+test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
+                            drop_last=True)
+
+
+
+dataset_sizes = {"train": train_count, "validation": valid_count}
+# class_names = image_datasets["train"].classes
+
 
 dataloaders = {
-    'train': torch.utils.data.DataLoader(image_datasets['train'], batch_size=batch_size, shuffle=True),
-     'validation':torch.utils.data.DataLoader(image_datasets['validation'], batch_size=batch_size, shuffle=True)}
+    'train': train_loader,
+     'validation': valid_loader}
 
 # Get a batch of training data
 inputs, classes = next(iter(dataloaders["validation"]))
