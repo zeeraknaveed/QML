@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 import torchvision
-from torchvision import datasets, transforms
+from torch.utils.data import random_split
 from aider import *
 from torch.utils.data import DataLoader
 # Pennylane
@@ -34,26 +34,41 @@ start_time = time.time()    # Start of the computation timer
 data_dir = "../data/hymenoptera_data"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
+full_dataset = AIDER("aider_labels.csv", 'AIDER/', transform=aider_transforms)
 
-transformed_dataset = AIDER("aider_labels.csv", 'AIDER/', transform=aider_transforms)
+# total_count = 6432
+# train_count = int(0.5 * total_count)
+# valid_count = int(0.2 * total_count)
+# test_count = total_count - train_count - valid_count
+# train_set, valid_set, test_set = torch.utils.data.random_split(transformed_dataset,
+#                                                                 (train_count, valid_count, test_count))
 
-total_count = 6432
-train_count = int(0.5 * total_count)
-valid_count = int(0.2 * total_count)
-test_count = total_count - train_count - valid_count
-train_set, valid_set, test_set = torch.utils.data.random_split(transformed_dataset,
-                                                                (train_count, valid_count, test_count))
+selected_classes = [0,1]
+filtered_data = np.array([(img, label) for img, label in full_dataset if label in selected_classes])
+
+images = torch.from_numpy(np.stack(filtered_data[:,0]).astype(np.float))
+targets = torch.from_numpy(np.stack(filtered_data[:,1]).astype(np.float))
+
+# Create Dataset objects
+filtered_dataset = torch.utils.data.TensorDataset(images,targets)
+
+# Split the dataset into train, validation, and test sets
+train_size = int(0.8 * len(filtered_dataset))
+val_size = len(filtered_dataset) - train_size
+train_set, valid_set = random_split(filtered_dataset, [train_size, val_size])
 
 train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
                             drop_last=True)
 valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
                             drop_last=True)
-test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
-                            drop_last=True)
+# test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True,
+#                             drop_last=True)
 
 
 
-dataset_sizes = {"train": train_count, "validation": valid_count}
+dataset_sizes = {"train": train_size, "validation": val_size}
+print('data filtered , train:',train_size,'val:',val_size )
+
 # class_names = image_datasets["train"].classes
 
 
@@ -185,4 +200,4 @@ if __name__ == '__main__':
 
     model_hybrid = train_model(model_hybrid, criterion, optimizer_hybrid, exp_lr_scheduler, num_epochs=num_epochs)
 
-    torch.save(model_hybrid.state_dict(), 'hybrid_qnn_model.pt')
+    torch.save(model_hybrid.state_dict(), 'hybrid_qnn_model_aider.pt')
