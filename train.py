@@ -14,6 +14,8 @@ from torch.utils.data import DataLoader
 # Pennylane
 from pennylane import numpy as np
 
+import numpy as npy
+
 torch.manual_seed(42)
 np.random.seed(42)
 
@@ -44,10 +46,10 @@ full_dataset = AIDER("aider_labels.csv", 'AIDER/', transform=aider_transforms)
 #                                                                 (train_count, valid_count, test_count))
 
 selected_classes = [0,1]
-filtered_data = np.array([(img, label) for img, label in full_dataset if label in selected_classes])
+filtered_data = npy.array([(img, label) for img, label in full_dataset if label in selected_classes])
 
-images = torch.from_numpy(np.stack(filtered_data[:,0]).astype(np.float))
-targets = torch.from_numpy(np.stack(filtered_data[:,1]).astype(np.float))
+images = torch.from_numpy(npy.stack(filtered_data[:,0]).astype(npy.float))
+targets = torch.from_numpy(npy.stack(filtered_data[:,1]).astype(npy.float))
 
 # Create Dataset objects
 filtered_dataset = torch.utils.data.TensorDataset(images,targets)
@@ -74,7 +76,7 @@ print('data filtered , train:',train_size,'val:',val_size )
 
 dataloaders = {
     'train': train_loader,
-     'validation': valid_loader}
+    'validation': valid_loader}
 
 # Get a batch of training data
 inputs, classes = next(iter(dataloaders["validation"]))
