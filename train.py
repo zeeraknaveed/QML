@@ -48,8 +48,8 @@ full_dataset = AIDER("aider_labels.csv", 'AIDER/', transform=aider_transforms)
 selected_classes = [0,1]
 filtered_data = npy.array([(img, label) for img, label in full_dataset if label in selected_classes])
 
-images = torch.from_numpy(npy.stack(filtered_data[:,0]).astype(npy.float))
-targets = torch.from_numpy(npy.stack(filtered_data[:,1]).astype(npy.float))
+images = torch.from_numpy(npy.stack(filtered_data[:,0]))
+targets = torch.from_numpy(npy.stack(filtered_data[:,1]))
 
 # Create Dataset objects
 filtered_dataset = torch.utils.data.TensorDataset(images,targets)
