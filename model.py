@@ -1,7 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from train_classical import n_qubits
+# from train_classical import n_qubits
+
+n_qubits = 4
 
 class MyClassicalFC(nn.Module):
     def __init__(self):
