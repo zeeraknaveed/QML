@@ -28,7 +28,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 n_qubits = 4                # Number of qubits
 step = 0.0004               # Learning rate
 batch_size = 4              # Number of samples for each training step
-num_epochs = 20             # Number of training epochs
+num_epochs = 25             # Number of training epochs
 q_depth = 6                 # Depth of the quantum circuit (number of variational layers)
 gamma_lr_scheduler = 0.1    # Learning rate reduction applied every 10 epochs.
 q_delta = 0.01              # Initial spread of random quantum weights
@@ -197,7 +197,7 @@ if __name__ == '__main__':
     criterion = nn.CrossEntropyLoss()
     optimizer_hybrid = optim.Adam(model_classical.fc.parameters(), lr=step)
     exp_lr_scheduler = lr_scheduler.StepLR(
-        optimizer_hybrid, step_size=10, gamma=gamma_lr_scheduler
+        optimizer_hybrid, step_size=2, gamma=gamma_lr_scheduler
     )
 
     model_classical = train_model(model_classical, criterion, optimizer_hybrid, exp_lr_scheduler, num_epochs=num_epochs)
