@@ -1,0 +1,50 @@
+/content/drive/MyDrive/QML/QML_quantization/train_classical.py:49: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  filtered_data = npy.array([(img, label) for img, label in full_dataset if label in selected_classes])
+/content/drive/MyDrive/QML/QML_quantization/train_classical.py:49: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  filtered_data = npy.array([(img, label) for img, label in full_dataset if label in selected_classes])
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+data filtered , train: 824 val: 207
+Training started:
+Phase: train Epoch: 1/20 Loss: 0.5229 Acc: 0.7961        
+Phase: validation   Epoch: 1/20 Loss: 0.3779 Acc: 0.9614        
+Phase: train Epoch: 2/20 Loss: 0.4684 Acc: 0.8410        
+Phase: validation   Epoch: 2/20 Loss: 0.3479 Acc: 0.9662        
+Phase: train Epoch: 3/20 Loss: 0.4401 Acc: 0.8823        
+Phase: validation   Epoch: 3/20 Loss: 0.3419 Acc: 0.9662        
+Phase: train Epoch: 4/20 Loss: 0.4559 Acc: 0.8519        
+Phase: validation   Epoch: 4/20 Loss: 0.3460 Acc: 0.9565        
+Phase: train Epoch: 5/20 Loss: 0.4502 Acc: 0.8665        
+Phase: validation   Epoch: 5/20 Loss: 0.3432 Acc: 0.9614        
+Phase: train Epoch: 6/20 Loss: 0.4254 Acc: 0.8847        
+Phase: validation   Epoch: 6/20 Loss: 0.3379 Acc: 0.9565        
+Phase: train Epoch: 7/20 Loss: 0.4289 Acc: 0.8920        
+Phase: validation   Epoch: 7/20 Loss: 0.3302 Acc: 0.9662        
+Phase: train Epoch: 8/20 Loss: 0.4276 Acc: 0.8823        
+Phase: validation   Epoch: 8/20 Loss: 0.3297 Acc: 0.9710        
+Phase: train Epoch: 9/20 Loss: 0.4496 Acc: 0.8604        
+Phase: validation   Epoch: 9/20 Loss: 0.3389 Acc: 0.9565        
+Phase: train Epoch: 10/20 Loss: 0.4418 Acc: 0.8677        
+Phase: validation   Epoch: 10/20 Loss: 0.3281 Acc: 0.9662        
+Phase: train Epoch: 11/20 Loss: 0.4216 Acc: 0.8811        
+Phase: validation   Epoch: 11/20 Loss: 0.3430 Acc: 0.9517        
+Phase: train Epoch: 12/20 Loss: 0.4053 Acc: 0.9066        
+Phase: validation   Epoch: 12/20 Loss: 0.3299 Acc: 0.9662        
+Phase: train Epoch: 13/20 Loss: 0.4204 Acc: 0.8835        
+Phase: validation   Epoch: 13/20 Loss: 0.3337 Acc: 0.9565        
+Phase: train Epoch: 14/20 Loss: 0.4170 Acc: 0.8932        
+Phase: validation   Epoch: 14/20 Loss: 0.3298 Acc: 0.9614        
+Phase: train Epoch: 15/20 Loss: 0.4371 Acc: 0.8738        
+Phase: validation   Epoch: 15/20 Loss: 0.3361 Acc: 0.9517        
+Phase: train Epoch: 16/20 Loss: 0.4035 Acc: 0.9078        
+Phase: validation   Epoch: 16/20 Loss: 0.3290 Acc: 0.9662        
+Phase: train Epoch: 17/20 Loss: 0.4229 Acc: 0.8774        
+Phase: validation   Epoch: 17/20 Loss: 0.3357 Acc: 0.9565        
+Phase: train Epoch: 18/20 Loss: 0.4160 Acc: 0.8920        
+Phase: validation   Epoch: 18/20 Loss: 0.3304 Acc: 0.9614        
+Phase: train Epoch: 19/20 Loss: 0.4149 Acc: 0.8981        
+Phase: validation   Epoch: 19/20 Loss: 0.3309 Acc: 0.9662        
+Phase: train Epoch: 20/20 Loss: 0.4172 Acc: 0.8908        
+Phase: validation   Epoch: 20/20 Loss: 0.3353 Acc: 0.9517        
+Training completed in 39m 57s
+Best test loss: 0.3281 | Best test accuracy: 0.9710
