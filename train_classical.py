@@ -182,24 +182,24 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs):
 if __name__ == '__main__':
 
     weights = torchvision.models.ResNet18_Weights.IMAGENET1K_V1
-    model_hybrid = torchvision.models.resnet18(weights=weights)
+    model_classical = torchvision.models.resnet18(weights=weights)
 
-    for param in model_hybrid.parameters():
+    for param in model_classical.parameters():
         param.requires_grad = False
 
 
     # Notice that model_hybrid.fc is the last layer of ResNet18
-    model_hybrid.fc = MyClassicalFC()
+    model_classical.fc = MyClassicalFC()
 
     # Use CUDA or CPU according to the "device" object.
-    model_hybrid = model_hybrid.to(device)
+    model_classical  =   model_classical.to(device)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer_hybrid = optim.Adam(model_hybrid.fc.parameters(), lr=step)
+    optimizer_hybrid = optim.Adam(model_classical.fc.parameters(), lr=step)
     exp_lr_scheduler = lr_scheduler.StepLR(
         optimizer_hybrid, step_size=10, gamma=gamma_lr_scheduler
     )
 
-    model_hybrid = train_model(model_hybrid, criterion, optimizer_hybrid, exp_lr_scheduler, num_epochs=num_epochs)
+    model_classical = train_model(model_classical, criterion, optimizer_hybrid, exp_lr_scheduler, num_epochs=num_epochs)
 
-    torch.save(model_hybrid.state_dict(), 'classical_model_aider.pt')
+    torch.save(model_classical.state_dict(), 'classical_model_aider.pt')
