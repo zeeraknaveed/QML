@@ -17,7 +17,7 @@ np.random.seed(42)
 # OpenMP: number of parallel threads.
 os.environ["OMP_NUM_THREADS"] = "1"
 
-n_qubits = 4                # Number of qubits
+n_qubits = 6                # Number of qubits
 step = 0.0004               # Learning rate
 batch_size = 4              # Number of samples for each training step
 num_epochs = 100              # Number of training epochs
