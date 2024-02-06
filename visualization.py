@@ -40,6 +40,10 @@ def parse_log_file(log_file_path):
 classical_qnn_log_path = '/logs/classical_qnn_log4bit.txt'
 classical_epochs, classical_train_losses, classical_train_accuracies, classical_val_losses, classical_val_accuracies, classical_test_loss, classical_test_accuracy = parse_log_file(classical_qnn_log_path)
 
+data = np.array([classical_epochs, classical_train_losses, classical_train_accuracies, classical_val_losses, classical_val_accuracies]).T
+header = "epochs\ctl\cta\cvl\cva"
+np.savetxt('logs/classical.dat', data, delimiter='\t', header=header, comments='')
+
 # # Print the extracted data
 # print("Classical Epochs:", classical_epochs)
 # print("Classical Train Losses:", classical_train_losses)
@@ -50,6 +54,10 @@ classical_epochs, classical_train_losses, classical_train_accuracies, classical_
 # print("Classical Test Accuracy:", classical_test_accuracy)
 hybrid_qnn_log_path = '/logs/hybrid_qnn_log4bit.txt'
 hybrid_epochs, hybrid_train_losses, hybrid_train_accuracies, hybrid_val_losses, hybrid_val_accuracies, hybrid_test_loss, hybrid_test_accuracy = parse_log_file(hybrid_qnn_log_path)
+
+data = np.array([hybrid_epochs, hybrid_train_losses, hybrid_train_accuracies, hybrid_val_losses, hybrid_val_accuracies]).T
+header = "epochs\htl\hta\hvl\hva"
+np.savetxt('logs/hybrid.dat', data, delimiter='\t', header=header, comments='')
 
 # Ensure the same number of epochs for both classical and hybrid QNN models
 common_epochs = list(set(classical_epochs) & set(hybrid_epochs))
